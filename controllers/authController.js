@@ -52,7 +52,6 @@ const crypto = require("crypto");
 //   sendToken(user, 200, res);
 // };
 
-
 exports.registerUser = async (req, res, next) => {
   const result = await cloudinary.v2.uploader.upload(
     req.body.avatar,
@@ -95,8 +94,6 @@ exports.registerUser = async (req, res, next) => {
   sendToken(user, 200, res);
 };
 
-
-
 //working
 
 // exports.registerUser = async (req, res, next) => {
@@ -130,7 +127,6 @@ exports.registerUser = async (req, res, next) => {
 //   // })
 //   sendToken(user, 200, res);
 // };
-
 
 // exports.loginUser = async (req, res, next) => {
 //   const { email, password } = req.body;
@@ -195,19 +191,18 @@ exports.loginUser = async (req, res, next) => {
   sendToken(user, 200, res);
 };
 
-
 exports.logout = async (req, res, next) => {
-  res.cookie("token", null, {
-    expires: new Date(Date.now()),
-    httpOnly: true,
-  });
+  // res.cookie("token", null, {
+  //   expires: new Date(Date.now()),
+  //   httpOnly: true,
+  // });
+  res.clearCookie("token");
 
   res.status(200).json({
     success: true,
     message: "Logged out",
   });
 };
-
 
 // exports.forgotPassword = async (req, res, next) => {
 //   const user = await User.findOne({ email: req.body.email });
@@ -274,7 +269,6 @@ exports.logout = async (req, res, next) => {
 //   await user.save();
 //   sendToken(user, 200, res);
 // };
-
 
 exports.forgotPassword = async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
@@ -366,7 +360,6 @@ exports.resetPassword = async (req, res, next) => {
   sendToken(user, 200, res);
 };
 
-
 exports.getUserProfile = async (req, res, next) => {
   const user = await User.findById(req.user.id);
   res.status(200).json({
@@ -374,7 +367,6 @@ exports.getUserProfile = async (req, res, next) => {
     user,
   });
 };
-
 
 exports.updatePassword = async (req, res, next) => {
   const user = await User.findById(req.user.id).select("+password");
@@ -393,8 +385,6 @@ exports.updatePassword = async (req, res, next) => {
 
   sendToken(user, 200, res);
 };
-
-
 
 // exports.updateProfile = async (req, res, next) => {
 //   const newUserData = {
@@ -445,7 +435,6 @@ exports.updatePassword = async (req, res, next) => {
 //   });
 // };
 
-
 // Delete user   =>   /api/v1/admin/user/:id
 exports.deleteUser = async (req, res, next) => {
   const user = await User.findById(req.params.id);
@@ -462,8 +451,6 @@ exports.deleteUser = async (req, res, next) => {
     success: true,
   });
 };
-
-
 
 exports.updateProfile = async (req, res, next) => {
   const newUserData = {
